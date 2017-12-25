@@ -5,4 +5,16 @@ angular.module('sidebar').controller('sidebarCtrl', function(gridService) {
 		gridService.play();
 	}
 
+	vm.reset = function() {
+		gridService.init();
+	}
+
+	vm.clear = function() {
+		gridService.clear();
+	}
+
+	vm.edit = function() {
+		gridService.edit()
+	}
+
 });
