@@ -6,7 +6,11 @@ angular.module('grid').service('gridService', function() {
 	var row_size = 100;
 	var wrap = true;
 	var column_size = 100;
-	var editMode = false;
+	var editMode = true;
+	var starve = 2;
+	var overpopulate = 3;
+	var reproduce = 3;
+
 
 	generate = function() {
 		if (run) {
@@ -53,14 +57,14 @@ angular.module('grid').service('gridService', function() {
 			for (var i = 0; i < row_size; i++) {
 				for (var j = 0; j < row_size; j++) {
 					if (cells[i][j] == 1) {
-						if (neighbors[i][j] < 2) {
+						if (neighbors[i][j] < starve) {
 							cells[i][j] = 0;
 						}
-						else if (neighbors[i][j] > 3) {
+						else if (neighbors[i][j] > overpopulate) {
 							cells[i][j] = 0;
 						}
 					} else {
-						if (neighbors[i][j] == 3) {
+						if (neighbors[i][j] == reproduce) {
 							cells[i][j] = 1
 						}
 					}
@@ -70,8 +74,6 @@ angular.module('grid').service('gridService', function() {
 	}
 
 	edit = function() {
-		console.log('edit')
-		run = false;
 		editMode = !editMode;
 	}
 
@@ -118,10 +120,30 @@ angular.module('grid').service('gridService', function() {
 		return cells;
 	}
 
+	editCell = function(i, j) {
+		cells[i][j] = !cells[i][j];
+	}
+
 	isRunning = function() {
 		return run;
 	}
 	
+	setStarve = function(value) {
+		starve = value;
+	}
+
+	setReproduce = function(value) {
+		reproduce = value;
+	}
+
+	setOverpopulate = function(value) {
+		overpopulate = value;
+	}
+
+	setWrap = function(value) {
+		wrap = value;
+	}
+
 	return {
 		row_size: row_size,
 		column_size: column_size,
@@ -134,7 +156,12 @@ angular.module('grid').service('gridService', function() {
 		getCells: getCells,
 		isRunning: isRunning,
 		edit: edit,
-		getEditMode: getEditMode
+		getEditMode: getEditMode,
+		editCell: editCell,
+		setStarve: setStarve,
+		setReproduce: setReproduce,
+		setOverpopulate: setOverpopulate,
+		setWrap: setWrap
 	}
 
 });

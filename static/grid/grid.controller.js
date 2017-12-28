@@ -4,7 +4,7 @@ angular.module('grid').controller('gridCtrl', function($interval, gridService) {
 	vm.row_size = 100;
 	vm.column_size = 100;
 	vm.rows = gridService.getCells;
-	vm.getEditMode = false;
+	vm.getEditMode = true;
 
 	vm.wrap = true;
 
@@ -23,13 +23,12 @@ angular.module('grid').controller('gridCtrl', function($interval, gridService) {
 	}
 
 	vm.edit = function(i, j) {
-		if vm.editMode {
-			console.log('click')
-			console.log(i, j)
+		if (vm.editMode) {
+			gridService.editCell(i,j);
 		}
 	}
 	
-	init();
+	clear();
 	vm.iterate();
 
 
